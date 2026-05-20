@@ -7,7 +7,7 @@ from telegram.ext import (
 )
 from api_client import fetch_definition
 
-# Загружаем переменные окружения
+
 load_dotenv()
 BOT_TOKEN = os.getenv("TG_BOT_TOKEN")
 PORT = int(os.getenv("PORT", 8000))
@@ -46,16 +46,16 @@ async def unknown_command(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     await update.message.reply_text("❓ Неизвестная команда. Используйте /help для списка команд.")
 
 def main() -> None:
-    # Инициализация приложения
+    
     app = Application.builder().token(BOT_TOKEN).build()
     
-    # Регистрация обработчиков
+   
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("define", define))
     app.add_handler(MessageHandler(filters.COMMAND, unknown_command))
     
-    # Автоматическое определение режима: Webhook (для Render) или Polling (локально)
+    
     webhook_url = os.getenv("WEBHOOK_URL")
     render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
     
