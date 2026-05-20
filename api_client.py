@@ -1,11 +1,11 @@
 import httpx
 from typing import Tuple
 
-# Бесплатный API словаря (не требует ключа, но архитектура готова под любые API)
+
 DICTIONARY_API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/"
 
 def format_api_response(data: list) -> str:
-    """Парсит JSON и возвращает читаемый текст."""
+    
     if not data:
         return "Нет данных для отображения."
     
@@ -21,7 +21,7 @@ def format_api_response(data: list) -> str:
         definitions = meaning.get("definitions", [])
         output += f"🔹 {pos}:\n"
         
-        # Ограничиваем вывод первыми 2 определениями для компактности
+        
         for i, defn in enumerate(definitions[:2], 1):
             output += f"{i}. {defn.get('definition', '')}\n"
             example = defn.get('example')
@@ -32,10 +32,7 @@ def format_api_response(data: list) -> str:
     return output.strip()
 
 async def fetch_definition(word: str) -> Tuple[bool, str]:
-    """
-    Отправляет GET-запрос к API, обрабатывает ошибки сети/HTTP,
-    возвращает кортеж (успех: bool, сообщение: str).
-    """
+    
     try:
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(f"{DICTIONARY_API_URL}{word.lower()}")
