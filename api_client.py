@@ -40,7 +40,7 @@ async def fetch_definition(word: str) -> Tuple[bool, str]:
             if response.status_code == 404:
                 return False, f"🔍 Слово «{word}» не найдено в английском словаре."
                 
-            response.raise_for_status() # Вызовет ошибку при 4xx/5xx
+            response.raise_for_status() 
             
             data = response.json()
             text = format_api_response(data)
